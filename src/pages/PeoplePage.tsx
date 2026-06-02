@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Loader } from '../components/Loader';
-import { PeopleTabs } from '../components/PeopleTabs/PeopleTabs';
+import { PeopleTable } from '../components/PeopleTable';
 import { Errors } from '../types/Errors';
 import { Person } from '../types';
 import { getPeople } from '../api';
@@ -21,8 +21,8 @@ export function PeoplePage() {
   function getPreparedPeople(allPeople: Person[]) {
     const preparedPeople = allPeople.map(person => ({
       ...person,
-      mother: people.find(mother => mother.name === person.motherName),
-      father: people.find(father => father.name === person.fatherName),
+      mother: allPeople.find(mother => mother.name === person.motherName),
+      father: allPeople.find(father => father.name === person.fatherName),
     }));
 
     return preparedPeople;
@@ -35,7 +35,7 @@ export function PeoplePage() {
 
   return (
     <>
-      <h1 className="title">People Page</h1>{' '}
+      <h1 className="title">People Page</h1>
       <div className="block">
         <div className="box table-container">
           {isLoading && <Loader />}
@@ -49,7 +49,7 @@ export function PeoplePage() {
             <p data-cy="noPeopleMessage">{Errors.noPeopleMessage}</p>
           )}
           {!isLoading && errorMessage !== Errors.UnableLoad && (
-            <PeopleTabs preparedPeople={preparedPeople} />
+            <PeopleTable preparedPeople={preparedPeople} />
           )}
         </div>
       </div>

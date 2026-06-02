@@ -1,13 +1,14 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Person } from '../../types';
 import classNames from 'classnames';
 import { ParentLink } from '../ParentLink';
+import { PersonLink } from '../PersonLink';
 
-type PeopleTabsProps = {
+type PeopleTableProps = {
   preparedPeople: Person[];
 };
 
-export function PeopleTabs({ preparedPeople }: PeopleTabsProps) {
+export function PeopleTable({ preparedPeople }: PeopleTableProps) {
   const { slug } = useParams<{ slug: string }>();
 
   return (
@@ -36,14 +37,7 @@ export function PeopleTabs({ preparedPeople }: PeopleTabsProps) {
             })}
           >
             <td>
-              <Link
-                to={`/people/${person.slug}`}
-                className={classNames({
-                  'has-text-danger': person.sex === 'f',
-                })}
-              >
-                {person.name}
-              </Link>
+              <PersonLink person={person} />
             </td>
 
             <td>{person.sex}</td>
